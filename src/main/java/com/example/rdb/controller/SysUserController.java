@@ -29,7 +29,6 @@ public class SysUserController {
             return ResponseUtil.create(ResponseCodeEnum.FAIL, null);
         }
         return ResponseUtil.create(ResponseCodeEnum.OK, userRegisterResp);
-
     }
 
     @PostMapping("/login")

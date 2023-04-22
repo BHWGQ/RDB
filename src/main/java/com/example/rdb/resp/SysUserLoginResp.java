@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 public class SysUserLoginResp {
     private Long id;
 
-    private String login_name;
+    private String loginName;
 
     private String token;
 

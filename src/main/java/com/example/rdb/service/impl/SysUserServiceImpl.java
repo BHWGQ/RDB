@@ -53,7 +53,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             return null;
         }
         return new SysUserLoginResp()
-                .setId(sysUserEntity.getId());
+                .setId(sysUserEntity.getId())
+                .setLoginName(sysUserEntity.getLoginName());
     }
 
     //查询loginName是否被注册
