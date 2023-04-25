@@ -6,3 +6,15 @@ spring:
     username: root
     password: 20031028
     driver-class-name: com.mysql.cj.jdbc.Driver
+    #开启文件上传和下载
+    #最大文件大小
+    #单词最大请求大小
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+#自定义的上传文件存放路径
+
+#自定义禁止上传的文件类型
+
