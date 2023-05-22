@@ -18,6 +18,8 @@ public enum ResponseCodeEnum {
     LOGIN_FAIL("20001", "登录失败"),
     BAD_TOKEN("20003", "token 校验失败"),
     NO_LOGIN("20005", "未登录"),
+    PROJECT_FAIL("00000", "查找项目失败"),
+    UPDATE_FAIL("10002", "密码修改失败"),
     UPLOAD_FAIL("20007", "上传文件失败");
 
     private final String code;

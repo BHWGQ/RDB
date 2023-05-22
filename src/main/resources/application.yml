@@ -12,8 +12,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
+      max-file-size: 150MB
+      max-request-size: 150MB
 #自定义的上传文件存放路径
 
 #自定义禁止上传的文件类型

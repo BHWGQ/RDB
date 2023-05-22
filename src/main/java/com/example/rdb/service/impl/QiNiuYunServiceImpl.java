@@ -37,7 +37,7 @@ public class QiNiuYunServiceImpl implements QiNiuYunService {
         String accessKey = "ErABU8Xnu4tHdUN2-Pw8MMGOaY-FtXBxIKurQwjt";
         String secretKey = "Ay_Z7B6Uqqg1nUPv-YEsliOf93zEhVcnVXPZjtb-";
         String bucket = "trade-server";
-        String fileName = file.getOriginalFilename();
+        String fileName = file.getOriginalFilename().replace(" ", "");
 //默认不指定key的情况下，以文件内容的hash值作为文件名
         String format = LocalDate.now().toString();
         String key = fileName + UUID.randomUUID().toString() + ".zip";
