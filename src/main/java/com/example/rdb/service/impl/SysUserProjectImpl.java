@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.rdb.entity.SysUserProjectEntity;
+import com.example.rdb.entity.SysUserProjectShenEntity;
 import com.example.rdb.mapper.SysUserProjectMapper;
+import com.example.rdb.mapper.SysUserProjectShenMapper;
 import com.example.rdb.req.SysUserProjectReq;
 import com.example.rdb.resp.SysUserProjectResp;
+import com.example.rdb.resp.SysUserProjectShenResp;
 import com.example.rdb.service.SysUserProjectService;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import java.util.Objects;
 public class SysUserProjectImpl extends ServiceImpl<SysUserProjectMapper, SysUserProjectEntity> implements SysUserProjectService {
     @Resource
     private SysUserProjectMapper sysUserProjectMapper;
+    @Resource
+    private SysUserProjectShenMapper sysUserProjectShenMapper;
 
     @Override
     public SysUserProjectResp look(SysUserProjectReq req) {
@@ -35,4 +40,18 @@ public class SysUserProjectImpl extends ServiceImpl<SysUserProjectMapper, SysUse
                 .setId(sysUserProjectEntity.getProjectHid())
                 .setSchoolName(sysUserProjectEntity.getSchoolName());
     }
+
+    @Override
+    public SysUserProjectShenResp took(SysUserProjectReq req) {
+        LambdaQueryWrapper<SysUserProjectShenEntity> queryWrapper = new QueryWrapper<SysUserProjectShenEntity>().lambda()
+                .eq(SysUserProjectShenEntity::getProjectId, req.getProjectId());
+        SysUserProjectShenEntity sysUserProjectShenEntity = sysUserProjectShenMapper.selectOne(queryWrapper);
+        if (Objects.isNull(sysUserProjectShenEntity)) {
+            return null;
+        }
+        return new SysUserProjectShenResp()
+                .setProjectOne(sysUserProjectShenEntity.getProjectOne())
+                .setProjectTwo(sysUserProjectShenEntity.getProjectTwo());
+    }
+
 }

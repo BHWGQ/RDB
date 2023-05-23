@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("user_project")
-public class SysUserProjectEntity {
+@TableName("user_project_shen")
+public class SysUserProjectShenEntity {
     @TableField("project_id")
     private String projectId;
 
@@ -20,12 +20,9 @@ public class SysUserProjectEntity {
     @TableField("project_user")
     private String userName;
 
-    @TableField(value = "project_hid")
-    private long projectHid;
+    @TableField("project_one")
+    private String projectOne;
 
-    @TableField("school_name")
-    private String schoolName;
-
-    @TableField("project_pm")
-    private String projectPm;
+    @TableField("project_two")
+    private String projectTwo;
 }

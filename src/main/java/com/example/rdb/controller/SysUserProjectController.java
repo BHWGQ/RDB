@@ -1,10 +1,7 @@
 package com.example.rdb.controller;
 
 import com.example.rdb.req.SysUserProjectReq;
-import com.example.rdb.resp.Response;
-import com.example.rdb.resp.ResponseCodeEnum;
-import com.example.rdb.resp.ResponseUtil;
-import com.example.rdb.resp.SysUserProjectResp;
+import com.example.rdb.resp.*;
 import com.example.rdb.service.SysUserProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +19,15 @@ public class SysUserProjectController {
     private SysUserProjectService sysUserProjectService;
 
     @PostMapping("/look")
-    public Response<SysUserProjectResp> look1(@RequestBody SysUserProjectReq req) {
+    public Response<SysUserResp> look1(@RequestBody SysUserProjectReq req) {
         SysUserProjectResp userProjectResp = sysUserProjectService.look(req);
-        if (Objects.isNull(userProjectResp)) {
+        SysUserProjectShenResp sysUserProjectShenResp = sysUserProjectService.took(req);
+        if ((Objects.isNull(userProjectResp)) | (Objects.isNull(sysUserProjectShenResp))) {
             return ResponseUtil.create(ResponseCodeEnum.PROJECT_FAIL, null);
         }
-        return ResponseUtil.create(ResponseCodeEnum.OK, userProjectResp);
+        SysUserResp sysUserResp = new SysUserResp();
+        sysUserResp.setSysUserProjectResp(userProjectResp)
+                .setSysUserProjectShenResp(sysUserProjectShenResp);
+        return ResponseUtil.create(ResponseCodeEnum.OK, sysUserResp);
     }
 }
