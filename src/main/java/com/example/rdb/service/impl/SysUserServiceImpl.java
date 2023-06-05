@@ -57,6 +57,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
                 .setLoginName(sysUserEntity.getLoginName());
     }
 
+    @Override
+    public List<SysUserEntity> selectAll(Integer a) {
+        return sysUserMapper.selectList(null);
+    }
+
     //查询loginName是否被注册
     public SysUserEntity selectByLoginName(String loginName) {
         QueryWrapper<SysUserEntity> wrapper = new QueryWrapper<>();

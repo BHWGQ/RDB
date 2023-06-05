@@ -40,4 +40,28 @@ public class FileController {
 //        }
         return result;
     }
+
+    @PostMapping("/upload1")
+    public Map<String, Object> fileupload1(MultipartFile file, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        String originName = file.getOriginalFilename();
+        if (!originName.endsWith(".zip")) {
+            result.put("status", "error");
+            result.put("msg", "文件类型不对");
+            return result;
+        }
+        String url = qiNiuYunService.upload(file);
+        result.put("url", url);
+//        String newName = UUID.randomUUID().toString()+".zip";
+//        try {
+//            file.transferTo(new File(folder,newName));
+//            String url = req.getScheme() + "//" + req.getServerName() + ":" + req.getServerPort() +format + newName;
+//            result.put("status","success");
+//            result.put("url",url);
+//        } catch (IOException e) {
+//            result.put("status","error");
+//            result.put("msg",e.getMessage());
+//        }
+        return result;
+    }
 }

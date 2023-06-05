@@ -9,16 +9,14 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class SysUserProjectResp {
-    private String projectId;
+public class SysPeopleJoinResp {
+    private String peopleCha;
 
-    private String projectName;
+    private String peopleLian;
 
-    private long id;
+    private String peopleClass;
 
-    private String userName;
+    private String peopleWhat;
 
-    private String schoolName;
-
-    private String projectPm;
+    private String peopleBs;
 }

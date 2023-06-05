@@ -1,5 +1,7 @@
 package com.example.rdb.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.example.rdb.entity.SysUserEntity;
 import com.example.rdb.req.SysUserLoginReq;
 import com.example.rdb.req.SysUserSaveReq;
 import com.example.rdb.resp.*;
@@ -7,13 +9,12 @@ import com.example.rdb.service.SysUserService;
 import com.example.rdb.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user_manager")
@@ -45,4 +46,16 @@ public class SysUserController {
         user.setToken(token);
         return ResponseUtil.create(ResponseCodeEnum.OK, user);
     }
+
+    @GetMapping("/su")
+    public Response<List<SysUserSelectResp>> userSelect(@RequestParam Integer a) {
+        List<SysUserEntity> sysUserEntities = sysUserService.selectAll(a);
+        if (Objects.isNull(sysUserEntities)) {
+            return ResponseUtil.create(ResponseCodeEnum.UPDATE_FAIL, null);
+        }
+        List<SysUserSelectResp> selectList = sysUserEntities.stream()
+                .map(entity -> BeanUtil.copyProperties(entity, SysUserSelectResp.class)).collect(Collectors.toList());
+        return ResponseUtil.create(ResponseCodeEnum.OK, selectList);
+    }
+
 }

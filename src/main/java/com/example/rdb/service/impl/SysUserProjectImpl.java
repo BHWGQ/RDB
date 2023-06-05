@@ -12,11 +12,13 @@ import com.example.rdb.resp.SysUserProjectResp;
 import com.example.rdb.resp.SysUserProjectShenResp;
 import com.example.rdb.service.SysUserProjectService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class SysUserProjectImpl extends ServiceImpl<SysUserProjectMapper, SysUserProjectEntity> implements SysUserProjectService {
     @Resource
     private SysUserProjectMapper sysUserProjectMapper;
@@ -38,7 +40,8 @@ public class SysUserProjectImpl extends ServiceImpl<SysUserProjectMapper, SysUse
                 .setProjectName(sysUserProjectEntity.getProjectName())
                 .setUserName(sysUserProjectEntity.getUserName())
                 .setId(sysUserProjectEntity.getProjectHid())
-                .setSchoolName(sysUserProjectEntity.getSchoolName());
+                .setSchoolName(sysUserProjectEntity.getSchoolName())
+                .setProjectPm(sysUserProjectEntity.getProjectPm());
     }
 
     @Override

@@ -10,10 +10,10 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -23,9 +23,8 @@ import java.util.UUID;
 @Service
 public class QiNiuYunServiceImpl implements QiNiuYunService {
 
-    @Autowired
+    @Resource
     private ObjectMapper objectMapper;
-
 
     public String upload(MultipartFile file) {
         //构造一个带指定 Region 对象的配置类
