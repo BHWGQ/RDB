@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -55,6 +56,11 @@ public class SysUserProjectImpl extends ServiceImpl<SysUserProjectMapper, SysUse
         return new SysUserProjectShenResp()
                 .setProjectOne(sysUserProjectShenEntity.getProjectOne())
                 .setProjectTwo(sysUserProjectShenEntity.getProjectTwo());
+    }
+
+    @Override
+    public List<SysUserProjectEntity> selectAll(Integer a) {
+        return sysUserProjectMapper.selectList(null);
     }
 
 }

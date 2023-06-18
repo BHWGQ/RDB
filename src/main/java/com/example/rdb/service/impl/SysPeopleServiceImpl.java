@@ -2,11 +2,14 @@ package com.example.rdb.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.rdb.entity.SysPeopleEntity;
 import com.example.rdb.mapper.SysPeopleMapper;
 import com.example.rdb.req.SysPeopleReq;
+import com.example.rdb.req.SysPeopleUpdateReq;
 import com.example.rdb.resp.SysPeopleInsertResp;
+import com.example.rdb.resp.SysPeopleUpdateResp;
 import com.example.rdb.service.SysPeopleService;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +44,51 @@ public class SysPeopleServiceImpl extends ServiceImpl<SysPeopleMapper, SysPeople
                     .setPeopleCha(req.getPeopleCha());
         }
         return null;
+    }
+
+    @Override
+    public List<SysPeopleEntity> delete(SysPeopleReq req) {
+        LambdaQueryWrapper<SysPeopleEntity> queryWrapper = new QueryWrapper<SysPeopleEntity>().lambda()
+                .eq(SysPeopleEntity::getPeopleCha, req.getPeopleCha())
+                .eq(SysPeopleEntity::getPeopleLian, req.getPeopleLian())
+                .eq(SysPeopleEntity::getPeopleTeam, req.getPeopleTeam())
+                .eq(SysPeopleEntity::getPeopleWhat, req.getPeopleWhat())
+                .eq(SysPeopleEntity::getPeopleLook, req.getPeopleLook())
+                .eq(SysPeopleEntity::getPeopleBs, req.getPeopleBs());
+        SysPeopleEntity sysPeopleEntity = sysPeopleMapper.selectOne(queryWrapper);
+        if (Objects.isNull(sysPeopleEntity)) {
+            return null;
+        }
+        List sysPeopleEntity1 = sysPeopleMapper.selectList(null);
+        int a = sysPeopleEntity1.size();
+        sysPeopleMapper.delete(queryWrapper);
+        List sysPeopleEntity2 = sysPeopleMapper.selectList(null);
+        int b = sysPeopleEntity2.size();
+        return sysPeopleMapper.selectList(null);
+    }
+
+    @Override
+    public SysPeopleUpdateResp update(SysPeopleUpdateReq req) {
+        LambdaQueryWrapper<SysPeopleEntity> queryWrapper = new QueryWrapper<SysPeopleEntity>().lambda()
+                .eq(SysPeopleEntity::getPeopleCha, req.getPeopleCha())
+                .eq(SysPeopleEntity::getPeopleLian, req.getPeopleLian())
+                .eq(SysPeopleEntity::getPeopleTeam, req.getPeopleTeam())
+                .eq(SysPeopleEntity::getPeopleWhat, req.getPeopleWhat())
+                .eq(SysPeopleEntity::getPeopleLook, req.getPeopleLook())
+                .eq(SysPeopleEntity::getPeopleBs, req.getPeopleBs());
+        SysPeopleEntity sysPeopleEntity = sysPeopleMapper.selectOne(queryWrapper);
+        if (Objects.isNull(sysPeopleEntity)) {
+            return null;
+        }
+        LambdaUpdateWrapper<SysPeopleEntity> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(SysPeopleEntity::getPeopleCha, req.getPeopleCha())
+                .eq(SysPeopleEntity::getPeopleLian, req.getPeopleLian())
+                .eq(SysPeopleEntity::getPeopleTeam, req.getPeopleTeam())
+                .eq(SysPeopleEntity::getPeopleBs, req.getPeopleBs())
+                .set(SysPeopleEntity::getPeopleWhat, req.getPeopleNewWhat())
+                .set(SysPeopleEntity::getPeopleLook, req.getPeopleNewLook());
+        sysPeopleMapper.update(null, lambdaUpdateWrapper);
+        return new SysPeopleUpdateResp()
+                .setPeopleCha(sysPeopleEntity.getPeopleCha());
     }
 }

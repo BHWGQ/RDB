@@ -13,6 +13,7 @@ import com.example.rdb.resp.SysTeacherProjectShenResp;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -51,5 +52,10 @@ public class SysTeacherProjectService extends ServiceImpl<SysTeacherProjectMappe
         return new SysTeacherProjectShenResp()
                 .setProjectOne(sysTeacherProjectShenEntity.getProjectOne())
                 .setProjectTwo(sysTeacherProjectShenEntity.getProjectTwo());
+    }
+
+    @Override
+    public List<SysTeacherProjectEntity> selectAll(Integer a) {
+        return sysTeacherProjectMapper.selectList(null);
     }
 }

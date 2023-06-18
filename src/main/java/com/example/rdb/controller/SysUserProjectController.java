@@ -1,15 +1,16 @@
 package com.example.rdb.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.example.rdb.entity.SysUserProjectEntity;
 import com.example.rdb.req.SysUserProjectReq;
 import com.example.rdb.resp.*;
 import com.example.rdb.service.SysUserProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -29,5 +30,16 @@ public class SysUserProjectController {
         sysUserResp.setSysUserProjectResp(userProjectResp)
                 .setSysUserProjectShenResp(sysUserProjectShenResp);
         return ResponseUtil.create(ResponseCodeEnum.OK, sysUserResp);
+    }
+
+    @GetMapping("/selectAll")
+    public Response<List<SysUserProjectEntity>> listResponse(@RequestParam Integer a) {
+        List<SysUserProjectEntity> sysUserProjectEntities = sysUserProjectService.selectAll(a);
+        if (Objects.isNull(sysUserProjectEntities)) {
+            return ResponseUtil.create(ResponseCodeEnum.UPDATE_FAIL, null);
+        }
+        List<SysUserProjectEntity> respList = sysUserProjectEntities.stream()
+                .map(entity -> BeanUtil.copyProperties(entity, SysUserProjectEntity.class)).collect(Collectors.toList());
+        return ResponseUtil.create(ResponseCodeEnum.OK, respList);
     }
 }
