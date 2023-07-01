@@ -2,6 +2,7 @@ package com.example.rdb.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.example.rdb.entity.SysUserEntity;
+import com.example.rdb.req.SysTokenReq;
 import com.example.rdb.req.SysUserLoginReq;
 import com.example.rdb.req.SysUserSaveReq;
 import com.example.rdb.resp.*;
@@ -44,6 +45,8 @@ public class SysUserController {
             put("id", user.getId());
         }});
         user.setToken(token);
+        long time = user.getEffTime() + System.currentTimeMillis();
+        user.setEffTime(time);
         return ResponseUtil.create(ResponseCodeEnum.OK, user);
     }
 
@@ -58,4 +61,19 @@ public class SysUserController {
         return ResponseUtil.create(ResponseCodeEnum.OK, selectList);
     }
 
+    @PostMapping("/tokenContinue")
+    public Response<SysTokenResp> effTime(@RequestBody SysTokenReq req) {
+        long effTime = sysUserService.effTime(req);
+        if (effTime == 0) {
+            return ResponseUtil.create(ResponseCodeEnum.UPDATE_FAIL, null);
+        }
+        String token = JwtUtil.sign(new HashMap<String, Object>() {{
+            put("Id", req.getUserId());
+        }});
+        long respEffTime = System.currentTimeMillis() + effTime;
+        SysTokenResp sysTokenResp = new SysTokenResp();
+        sysTokenResp.setEffTime(respEffTime);
+        sysTokenResp.setToken(token);
+        return ResponseUtil.create(ResponseCodeEnum.OK, sysTokenResp);
+    }
 }

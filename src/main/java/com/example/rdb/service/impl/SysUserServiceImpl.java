@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.rdb.entity.SysUserEntity;
 import com.example.rdb.mapper.SysUserMapper;
+import com.example.rdb.req.SysTokenReq;
 import com.example.rdb.req.SysUserLoginReq;
 import com.example.rdb.req.SysUserSaveReq;
 import com.example.rdb.resp.SysUserLoginResp;
@@ -43,6 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return null;
     }
 
+    private long effTime = 60 * 60 * 1000;
     @Override
     public SysUserLoginResp login(SysUserLoginReq req) {
         LambdaQueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<SysUserEntity>().lambda()
@@ -54,12 +56,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         }
         return new SysUserLoginResp()
                 .setId(sysUserEntity.getId())
-                .setLoginName(sysUserEntity.getLoginName());
+                .setLoginName(sysUserEntity.getLoginName())
+                .setEffTime(effTime);
     }
 
     @Override
     public List<SysUserEntity> selectAll(Integer a) {
         return sysUserMapper.selectList(null);
+    }
+
+    @Override
+    public long effTime(SysTokenReq req) {
+        LambdaQueryWrapper<SysUserEntity> sysUserEntityLambdaQueryWrapper = new QueryWrapper<SysUserEntity>().lambda()
+                .eq(SysUserEntity::getId, req.getUserId());
+        if (Objects.isNull(sysUserEntityLambdaQueryWrapper)) {
+            return 0;
+        }
+        return effTime;
     }
 
     //查询loginName是否被注册

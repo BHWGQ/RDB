@@ -20,7 +20,7 @@ public class SysPeopleContorller {
     private SysPeopleService sysPeopleService;
 
     @GetMapping("/selectAll")
-    public Response<List<SysPeopleResp>> listResponse(@RequestParam Integer a) {
+    public Response<List<SysPeopleResp>> listResponse(@RequestParam("a") Integer a) {
 
         List<SysPeopleEntity> sysPeopleEntityList = sysPeopleService.selectAll(a);
         if (Objects.isNull(sysPeopleEntityList)) {

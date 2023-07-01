@@ -16,6 +16,8 @@ public class SysUserLoginResp {
 
     private String token;
 
+    private long effTime;
+
 //    private String password;
 
 //    public Long getId() {

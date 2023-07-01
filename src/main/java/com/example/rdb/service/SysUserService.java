@@ -1,6 +1,7 @@
 package com.example.rdb.service;
 
 import com.example.rdb.entity.SysUserEntity;
+import com.example.rdb.req.SysTokenReq;
 import com.example.rdb.req.SysUserLoginReq;
 import com.example.rdb.req.SysUserSaveReq;
 import com.example.rdb.resp.SysUserLoginResp;
@@ -14,4 +15,6 @@ public interface SysUserService {
     SysUserLoginResp login(SysUserLoginReq req);
 
     List<SysUserEntity> selectAll(Integer a);
+
+    long effTime(SysTokenReq req);
 }
